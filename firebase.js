@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "answers-5945c.firebaseapp.com",
   projectId: "answers-5945c",
-  storageBucket: "answers-5945c.firebasestorage.app",
+  storageBucket: "answers-5945c.appspot.com", // FIXED: correct bucket name
   messagingSenderId: "266101131235",
   appId: "1:266101131235:web:4fb2809ee4578e362c42d6",
   measurementId: "G-G7LZ2EHPGQ"
@@ -25,9 +25,10 @@ const storage = getStorage(app);
 // File upload function
 const uploadFile = async (file, folderName = "uploads") => {
   try {
-    // Ensure user is authenticated (anonymous sign-in)
-    await signInAnonymously(auth);
-
+    // Only sign in anonymously if not already signed in
+    if (!auth.currentUser) {
+      await signInAnonymously(auth);
+    }
     const storageRef = ref(storage, `${folderName}/${file.name}`);  // User-specific folder in Firebase Storage
     await uploadBytes(storageRef, file);  // Upload file
     console.log('File uploaded successfully');
@@ -37,6 +38,7 @@ const uploadFile = async (file, folderName = "uploads") => {
     console.log('File URL:', fileURL);
     return fileURL;
   } catch (error) {
+    alert('Ngarkimi i materialit dështoi. Ju lutemi provoni përsëri.\n' + (error && error.message ? error.message : error));
     console.error("Error uploading file:", error);
     throw error; // Rethrow so the caller can handle it
   }
