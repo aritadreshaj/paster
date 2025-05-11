@@ -1,0 +1,49 @@
+/* Center the content within 60% of the page width */
+.arch-project-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.arch-project-page-main {
+  flex: 1;
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.arch-project-page-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.arch-project-page-category {
+  font-size: 1rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.arch-project-page-content {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: #333;
+  text-align: justify;
+}
+
+.arch-project-page-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.arch-project-page-footer {
+  margin-top: auto;
+}

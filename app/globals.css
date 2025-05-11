@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode Colors */
+    --background: 0 0% 100%;  /* Darker background */
+    --foreground: 0 0% 10%;    /* Dark text */
+    --muted-foreground: 0 0% 30%; /* Lighter text */
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --radius: 0.5rem;
+    font-size: 12px; /* Set base font size globally */
+  }
+
+  .dark {
+    /* Dark Mode Colors */
+    --background: 0 0% 10%;    /* Dark background */
+    --foreground: 0 0% 98%;    /* Light text */
+    --muted-foreground: 0 0% 65%; /* Darker muted text */
+  }
+}
+
+/* Tailwind Custom Utilities */
+@layer utilities {
+  .border-border {
+    border-color: var(--border);
+  }
+
+  .bg-background {
+    background-color: var(--background);
+  }
+
+  .text-foreground {
+    color: var(--foreground);
+  }
+
+  .text-muted {
+    color: var(--muted-foreground);
+  }
+}
+
+/* Global Styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground; /* Apply background and text colors */
+    font-family: 'Poppins', sans-serif;
+    cursor: none; /* Hide default cursor */
+  }
+
+  /* Custom Cursor */
+  #custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background-color: #ff6000; /* Default color is orange */
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: background-color 0.2s ease, transform 0.1s ease-out;
+  }
+
+  /* Change cursor color to black when hovering over links or buttons */
+  a:hover ~ #custom-cursor,
+  button:hover ~ #custom-cursor {
+    background-color: black; /* Change to black when hovering over clickable elements */
+  }
+
+  /* Ensure the custom cursor is always visible */
+  body {
+    cursor: none; /* Hide the default cursor globally */
+  }
+
+  /* Always show a scrollbar */
+  html {
+    overflow-y: scroll;
+  }
+}
+.animate-italicize {
+  animation: italicize 1s infinite;
+}

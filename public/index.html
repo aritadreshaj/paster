@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Data</title>
+</head>
+<body>
+    <h1>Submit Your Data</h1>
+    <form id="submissionForm">
+        <input type="text" id="name" placeholder="Enter your name" required />
+        <input type="email" id="email" placeholder="Enter your email" required />
+        <input type="file" id="fileInput" required />
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Include Firebase SDK file -->
+    <script src="../firebase.js"></script>
+    <!-- Include your custom submit logic -->
+    <script type="module" src="submit.js"></script>
+</body>
+</html>

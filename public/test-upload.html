@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase Upload Test</title>
+  <script type="module">
+    import { uploadFile } from '../firebase.js';
+
+    window.upload = async () => {
+      const file = document.getElementById('file').files[0];
+      if (!file) return alert('No file selected');
+      try {
+        const url = await uploadFile(file);
+        alert('Success! File URL: ' + url);
+      } catch (e) {
+        alert('Upload failed. See console.');
+        console.error(e);
+      }
+    };
+  </script>
+</head>
+<body>
+  <input type="file" id="file" />
+  <button onclick="upload()">Upload</button>
+</body>
+</html>
