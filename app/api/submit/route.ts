@@ -1,21 +1,16 @@
 import { NextRequest } from "next/server";
-import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
+import * as admin from "firebase-admin";
 import nodemailer from "nodemailer";
 
-// Initialize Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyBOELnwxCpCvO5o46Ib0eX0dpv0AZ3tBLc",
-  authDomain: "answers-5945c.firebaseapp.com",
-  projectId: "answers-5945c",
-  storageBucket: "answers-5945c.appspot.com",
-  messagingSenderId: "266101131235",
-  appId: "1:266101131235:web:4fb2809ee4578e362c42d6",
-  measurementId: "G-G7LZ2EHPGQ"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);     // Firestore
+// Initialize Admin SDK only once
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    // If using a service account JSON, use:
+    // credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string)),
+  });
+}
+const db = admin.firestore();
 
 // Setup email transport
 const transporter = nodemailer.createTransport({
@@ -89,22 +84,19 @@ export async function POST(req: Request) {
       `mbartje: ${mbartje}\n`;
 
     // Store metadata in Firestore with custom document name
-    await setDoc(
-      doc(db, "submissions", folderName),
-      {
-        emri,
-        ditelindja,
-        vendlindja,
-        vendbanimiAktual,
-        email,
-        rrëfim,
-        mbartje,
-        images,
-        videos,
-        audio,
-        submissionDate: new Date(),
-      }
-    );
+    await db.collection("submissions").doc(folderName).set({
+      emri,
+      ditelindja,
+      vendlindja,
+      vendbanimiAktual,
+      email,
+      rrëfim,
+      mbartje,
+      images,
+      videos,
+      audio,
+      submissionDate: new Date(),
+    });
 
     if (email) {
       await sendConfirmationEmail(email);
